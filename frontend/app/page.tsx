@@ -348,15 +348,25 @@ rounded-2xl
 
                 {msg.type === "learning_path" ? (
 
-                  <div className="bg-slate-800/80 p-5 rounded-3xl">
+                  <div
+                    className="
+      bg-white/10
+      backdrop-blur-xl
+      border border-white/10
+      p-5
+      rounded-3xl
+    "
+                  >
 
                     <h3 className="text-xl font-bold mb-3">
                       📚 Learning Path
                     </h3>
 
-                    <pre className="whitespace-pre-wrap text-sm">
-                      {msg.path}
-                    </pre>
+                    <div className="prose prose-invert max-w-none">
+                      <ReactMarkdown>
+                        {msg.path}
+                      </ReactMarkdown>
+                    </div>
 
                   </div>
 

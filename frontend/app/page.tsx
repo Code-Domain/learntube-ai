@@ -307,11 +307,11 @@ shadow-xl
           </h1>
 
         </div>
-        <div className="md:hidden p-4 border-b border-white/10">
+        {/* <div className="md:hidden p-4 border-b border-white/10">
           <h1 className="text-xl font-bold">
             🎥 LearnTube AI
           </h1>
-        </div>
+        </div> */}
         <div className="
 h-16
 border-b
@@ -337,7 +337,7 @@ px-8
 
           {messages.length === 0 && (
 
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center h-full max-[600px]:min-h-[600px] max-[840px]:min-h-[560px]">
 
               <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center">
                 Learn Anything.

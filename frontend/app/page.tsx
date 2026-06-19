@@ -171,12 +171,13 @@ export default function Home() {
     <main className="h-screen flex text-white bg-[#0A0A0F] overflow-hidden">
       {/* Sidebar */}
       <div className="
+hidden md:flex
 w-80
 bg-white/5
 backdrop-blur-2xl
 border-r border-white/10
 p-6
-flex flex-col
+flex-col
 ">
 
         <div className="mb-8">
@@ -254,6 +255,11 @@ shadow-xl
 
       {/* Chat Area */}
       <div className="flex-1 flex flex-col">
+        <div className="md:hidden p-4 border-b border-white/10">
+          <h1 className="text-xl font-bold">
+            🎥 LearnTube AI
+          </h1>
+        </div>
         <div className="
 h-16
 border-b
@@ -275,13 +281,13 @@ px-8
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-6">
+        <div className="flex-1 overflow-y-auto p-3 md:p-8 space-y-6">
 
           {messages.length === 0 && (
 
             <div className="flex flex-col items-center justify-center h-full">
 
-              <h1 className="text-6xl font-bold mb-4 text-center">
+              <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center">
                 Learn Anything.
               </h1>
 
@@ -293,7 +299,7 @@ px-8
                 AI-powered learning paths, courses and curated videos.
               </p>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
 
                 {[
                   "Learn React",
@@ -388,8 +394,8 @@ rounded-2xl
                   <div
                     className={
                       msg.sender === "user"
-                        ? "ml-auto max-w-[70%] bg-gradient-to-r from-indigo-500 to-purple-600 shadow-xl text-white p-4 rounded-3xl shadow-lg"
-                        : "max-w-[70%] bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl backdrop-blur-md text-white p-4 rounded-3xl"
+                        ? "ml-auto max-w-[95%] md:max-w-[75%] bg-gradient-to-r from-indigo-500 to-purple-600 shadow-xl text-white p-4 rounded-3xl shadow-lg"
+                        : "max-w-[95%] md:max-w-[75%] bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl backdrop-blur-md text-white p-4 rounded-3xl"
                     }
                   >
                     <div className="prose prose-invert max-w-none">
@@ -418,18 +424,25 @@ rounded-2xl
         {/* Input Area */}
         <div className="
 border-t
-border-white/10
-p-6
-backdrop-blur-xl
+border-slate-700
+p-3 md:p-4
 bg-black/20
+backdrop-blur-xl
 ">
 
           <textarea
-            className="w-full bg-white/5
-border
-border-white/10
-backdrop-blur-xl backdrop-blur-md text-white rounded-2xl p-4 outline-none"
-            placeholder="Ask anything..."
+            rows={2}
+            className="
+  w-full
+  bg-slate-800/80
+  backdrop-blur-md
+  text-white
+  rounded-2xl
+  p-4
+  outline-none
+  resize-none
+  text-sm md:text-base
+"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -443,14 +456,22 @@ backdrop-blur-xl backdrop-blur-md text-white rounded-2xl p-4 outline-none"
           <button
             onClick={sendMessage}
             disabled={loading}
-            className="mt-3 bg-gradient-to-r
+            className="
+mt-3
+w-full md:w-auto
+bg-gradient-to-r
 from-indigo-500
 to-purple-600
+px-6
+py-3
+rounded-2xl
+font-medium
+shadow-lg
 hover:scale-105
 transition-all
-duration-300 px-6 py-3 rounded-2xl disabled:opacity-50 transition"
+"
           >
-            {loading ? "Thinking..." : "Send"}
+            {loading ? loadingText : "Send"}
           </button>
 
         </div>

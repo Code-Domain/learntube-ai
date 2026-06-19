@@ -15,6 +15,8 @@ export default function Home() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [loadingText, setLoadingText] = useState("");
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -170,15 +172,37 @@ export default function Home() {
   return (
     <main className="h-screen flex text-white bg-[#0A0A0F] overflow-hidden">
       {/* Sidebar */}
-      <div className="
-hidden md:flex
-w-80
-bg-white/5
-backdrop-blur-2xl
-border-r border-white/10
-p-6
-flex-col
-">
+      <div
+        className={`
+    fixed md:relative
+    z-50
+    top-0 left-0
+    h-full
+    w-80
+    bg-white/5
+    backdrop-blur-2xl
+    border-r border-white/10
+    p-6
+    flex flex-col
+
+    transition-transform
+    duration-300
+
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+
+    md:translate-x-0
+  `}
+      >
+        <div className="md:hidden flex justify-end mb-4">
+
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="text-xl"
+          >
+            ✕
+          </button>
+
+        </div>
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold">
@@ -252,9 +276,37 @@ shadow-xl
         </div>
 
       </div>
+      {sidebarOpen && (
+
+        <div
+          className="
+      md:hidden
+      fixed
+      inset-0
+      bg-black/50
+      z-40
+    "
+          onClick={() => setSidebarOpen(false)}
+        />
+
+      )}
 
       {/* Chat Area */}
       <div className="flex-1 flex flex-col">
+        <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10">
+
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="text-2xl"
+          >
+            ☰
+          </button>
+
+          <h1 className="font-bold text-lg">
+            LearnTube AI
+          </h1>
+
+        </div>
         <div className="md:hidden p-4 border-b border-white/10">
           <h1 className="text-xl font-bold">
             🎥 LearnTube AI

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import VideoCard from "@/components/VideoCard";
 import ReactMarkdown from "react-markdown";
+import SplashLoader from "@/components/SplashLoader";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -17,21 +18,15 @@ export default function Home() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [appReady, setAppReady] =
+    useState(false);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
     });
   }, [messages]);
 
-  useEffect(() => {
-    const savedChats = localStorage.getItem(
-      "learnTubeChats"
-    );
-
-    if (savedChats) {
-      setChatHistory(JSON.parse(savedChats));
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(
@@ -169,6 +164,47 @@ export default function Home() {
     setLoading(false);
   }
 
+  useEffect(() => {
+
+    const initializeApp = async () => {
+
+      try {
+
+        const savedChats = localStorage.getItem(
+          "learnTubeChats"
+        );
+
+        if (savedChats) {
+
+          setChatHistory(
+            JSON.parse(savedChats)
+          );
+
+        }
+
+        await new Promise(
+          resolve => setTimeout(resolve, 5000)
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+      } finally {
+
+        setAppReady(true);
+
+      }
+
+    };
+
+    initializeApp();
+
+  }, []);
+
+  if (!appReady) {
+    return <SplashLoader />;
+  }
   return (
     <main className="h-screen flex text-white bg-[#0A0A0F] overflow-hidden">
       {/* Sidebar */}

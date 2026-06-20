@@ -106,7 +106,12 @@ def chat(request: ChatRequest):
 
         print("AI RANKING:", ranking)
 
-        ranked_videos = rank_videos(videos)
+        ranked_videos = reorder_videos(
+            videos,
+            ranking
+        )
+
+        ranked_videos = ranked_videos[:5]
 
         explanation = explain_videos(
             request.message,

@@ -19,7 +19,15 @@ def get_intent(message: str):
         "tutorial",
         "course",
         "playlist",
-        "watch"
+        "watch",
+        "learn from",
+        "best course",
+        "best tutorial",
+        "recommended videos",
+        "top videos",
+        "free course",
+        "lecture",
+        "lectures"
     ]
 
     if any(

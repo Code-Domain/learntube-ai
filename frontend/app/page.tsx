@@ -18,8 +18,11 @@ export default function Home() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+
   const [appReady, setAppReady] =
     useState(false);
+
+  const [historyLoaded, setHistoryLoaded] = useState(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
@@ -29,11 +32,15 @@ export default function Home() {
 
 
   useEffect(() => {
+
+    if (!historyLoaded) return;
+
     localStorage.setItem(
       "learnTubeChats",
       JSON.stringify(chatHistory)
     );
-  }, [chatHistory]);
+
+  }, [chatHistory, historyLoaded]);
 
   async function sendMessage() {
 
@@ -170,27 +177,36 @@ export default function Home() {
 
       try {
 
-        const savedChats = localStorage.getItem(
-          "learnTubeChats"
-        );
+        const savedChats =
+          localStorage.getItem("learnTubeChats");
+
 
         if (savedChats) {
 
-          setChatHistory(
-            JSON.parse(savedChats)
-          );
+          const parsedChats = JSON.parse(savedChats);
+
+          setChatHistory(parsedChats);
 
         }
 
+
+        setHistoryLoaded(true);
+
+
         await new Promise(
-          resolve => setTimeout(resolve, 5000)
+          resolve => setTimeout(resolve, 1800)
         );
+
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "History loading error:",
+          error
+        );
 
-      } finally {
+      }
+      finally {
 
         setAppReady(true);
 
@@ -198,7 +214,9 @@ export default function Home() {
 
     };
 
+
     initializeApp();
+
 
   }, []);
 

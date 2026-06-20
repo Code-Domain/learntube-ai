@@ -288,8 +288,9 @@ shadow-xl
         >
           + New Chat
         </button>
-        <div className="mt-6">
-          <h2 className="text-sm text-gray-400 mb-3">
+        <div className="mt-6 flex-1 overflow-y-auto pr-2">
+
+          <h2 className="text-sm text-gray-400 mb-3 sticky top-0 bg-[#0A0A0F]/80 backdrop-blur-xl py-2">
             Recent Chats
           </h2>
 
@@ -297,17 +298,18 @@ shadow-xl
 
             <div
               key={chat.id}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between mb-2"
             >
 
               <button
                 onClick={() => {
                   setMessages(chat.messages);
                   setCurrentChatId(chat.id);
+                  setSidebarOpen(false);
                 }}
                 className={`flex-1 text-left p-2 rounded-lg transition ${currentChatId === chat.id
-                  ? "bg-white/10 border border-white/20"
-                  : "hover:bg-white/5"
+                    ? "bg-white/10 border border-white/20"
+                    : "hover:bg-white/5"
                   }`}
               >
                 {chat.title}
@@ -327,6 +329,7 @@ shadow-xl
             </div>
 
           ))}
+
         </div>
 
       </div>

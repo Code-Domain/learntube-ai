@@ -61,13 +61,25 @@ def search_videos(query):
             .get("viewCount", 0)
         )
 
+        stats = stats_map.get(video_id, {})
+
+        statistics = stats.get(
+            "statistics",
+            {}
+        )
+
         videos.append({
             "title": title,
             "channel": channel,
             "video_id": video_id,
             "url": url,
             "thumbnail": thumbnail,
-            "views": views
+            "views": int(
+                statistics.get(
+                    "viewCount",
+                    0
+                )
+            )
         })
 
     return videos

@@ -14,7 +14,7 @@ export default function SplashLoader() {
       bg-[#030712]
     "
     >
-      {/* Glow */}
+      {/* Gltypeow */}
 
       <div
         className="

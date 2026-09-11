@@ -316,42 +316,44 @@ export default function Home() {
               </div>
             )}
 
-            {messages.map((msg, index) => (
-              <div key={index} className={`fade-in-up flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                
-                {msg.type === "learning_path" ? (
-                  <div className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-2xl rounded-tl-sm">
+            {messages.map((msg, index) => {
+              // Fixed: Moved logic inside a block statement to avoid stray JSX text
+              let messageContent = null;
+
+              if (msg.type === "learning_path") {
+                messageContent = (
+                  <div className="w-full min-w-0 bg-white/[0.03] border border-white/10 p-5 rounded-2xl rounded-tl-sm overflow-hidden">
                     <div className="flex items-center gap-2 mb-3 text-indigo-400">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.315 0-2.56.39-3.61 1.06-.29.18-.39.56-.28.87L2.81 8.81c.12.32.49.48.79.34.58-.28 1.23-.5 1.9-.62.32-.06.5.28.5.57V17a1 1 0 001 1h4a1 1 0 001-1v-5.99c0-.29.18-.63.5-.57.67.12 1.32.34 1.9.62.3.14.67-.02.79-.34l.2-.88c.11-.31-.01-.69-.28-.87A7.968 7.968 0 009 4.804z" />
                       </svg>
                       <h3 className="text-sm font-semibold tracking-wide uppercase">Learning Path</h3>
                     </div>
-                    <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-white">
+                    <div className="prose prose-invert prose-sm max-w-none break-words overflow-x-auto custom-scrollbar prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-white">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {msg.path}
                       </ReactMarkdown>
                     </div>
                   </div>
-                ) : msg.type === "youtube" ? (
-                  <div className="w-full space-y-4">
-                    {/* Explanation Box */}
-                    <div className="bg-white/[0.03] border border-white/10 p-4 rounded-2xl rounded-tl-sm">
+                );
+              } else if (msg.type === "youtube") {
+                messageContent = (
+                  <div className="w-full min-w-0 space-y-4">
+                    <div className="min-w-0 bg-white/[0.03] border border-white/10 p-4 rounded-2xl rounded-tl-sm overflow-hidden">
                       <div className="flex items-center gap-2 mb-2 text-indigo-400">
-                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                           <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                           <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                         </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                          <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                        </svg>
                         <h3 className="text-sm font-semibold tracking-wide uppercase">AI Analysis</h3>
                       </div>
-                      <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white prose-p:text-gray-300 prose-strong:text-white">
+                      <div className="prose prose-invert prose-sm max-w-none break-words overflow-x-auto custom-scrollbar prose-headings:text-white prose-p:text-gray-300 prose-strong:text-white">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {msg.explanation}
                         </ReactMarkdown>
                       </div>
                     </div>
 
-                    {/* Video Cards */}
                     <div className="grid grid-cols-1 gap-4">
                       {msg.videos.map((video: any) => (
                         <VideoCard
@@ -365,20 +367,19 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                ) : (
-                  <div className={`flex gap-3 items-end max-w-[85%] md:max-w-[75%] ${msg.sender === "user" ? "flex-row-reverse" : ""}`}>
-                    {/* Avatar */}
+                );
+              } else {
+                messageContent = (
+                  <div className={`flex gap-3 items-end min-w-0 max-w-[90%] md:max-w-[80%] ${msg.sender === "user" ? "flex-row-reverse ml-auto" : ""}`}>
                     <div className={`h-8 w-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${msg.sender === "user" ? "bg-gray-700 text-white" : "bg-gradient-to-br from-indigo-500 to-purple-600 text-white"}`}>
                       {msg.sender === "user" ? "U" : "AI"}
                     </div>
-                    
-                    {/* Bubble */}
                     <div
-                      className={
+                      className={`min-w-0 break-words overflow-x-auto custom-scrollbar ${
                         msg.sender === "user"
                           ? "bg-gradient-to-br from-indigo-600 to-purple-600 text-white px-4 py-2.5 rounded-2xl rounded-br-sm shadow-lg shadow-indigo-900/20"
                           : "bg-white/[0.05] border border-white/10 text-gray-200 px-4 py-2.5 rounded-2xl rounded-bl-sm"
-                      }
+                      }`}
                     >
                       <div className="prose prose-invert prose-sm max-w-none prose-p:my-0 prose-headings:my-1 prose-p:leading-relaxed">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -387,9 +388,15 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            ))}
+                );
+              }
+
+              return (
+                <div key={index} className={`fade-in-up flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+                  {messageContent}
+                </div>
+              );
+            })}
 
             {loading && (
               <div className="flex justify-start gap-3 items-end">
@@ -432,7 +439,6 @@ export default function Home() {
                 }}
               />
               
-              {/* ChatGPT-like Send Button */}
               <button
                 onClick={sendMessage}
                 disabled={loading || !message.trim()}
@@ -473,6 +479,7 @@ export default function Home() {
         }
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
+          height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import VideoCard from "@/components/VideoCard";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import SplashLoader from "@/components/SplashLoader";
 
 export default function Home() {
@@ -472,7 +473,7 @@ rounded-2xl
                     </h3>
 
                     <div className="prose prose-invert max-w-none">
-                      <ReactMarkdown>
+                      <ReactMarkdown  remarkPlugins={[remarkGfm]}>
                         {msg.path}
                       </ReactMarkdown>
                     </div>
@@ -488,9 +489,11 @@ rounded-2xl
                         🤖 Why these videos?
                       </h3>
 
-                      <p className="whitespace-pre-wrap">
-                        {msg.explanation}
-                      </p>
+                      <div className="prose prose-invert max-w-none">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.explanation}
+                        </ReactMarkdown>
+                      </div>
                     </div>
 
                     {msg.videos.map((video: any) => (
@@ -518,7 +521,7 @@ rounded-2xl
                     }
                   >
                     <div className="prose prose-invert max-w-none">
-                      <ReactMarkdown>
+                      <ReactMarkdown  remarkPlugins={[remarkGfm]}>
                         {msg.text}
                       </ReactMarkdown>
                     </div>

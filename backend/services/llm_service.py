@@ -19,6 +19,15 @@ def ask_ai(message: str, history=[]):
             Rules:
             - Answer naturally like ChatGPT.
             - Use markdown formatting when helpful.
+            - Formatting rules:
+- Use standard Markdown.
+- For tables, use valid GitHub-Flavored Markdown tables.
+- Every table row MUST be on a separate line.
+- Never escape table separator pipes with backslashes.
+- Do not output \| for table columns.
+- Do not use escaped HTML such as \<br>.
+- Prefer Markdown lists instead of HTML.
+- Preserve newline characters.
             - Use headings, lists, tables, code blocks, or step-by-step explanations only when appropriate.
             - Adapt the answer format to the user's question.
             - Be clear, educational, and beginner friendly.

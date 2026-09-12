@@ -15,17 +15,18 @@ from services.video_reason_service import generate_video_reason
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "https://learntube-ai-ecru.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://learntube-ai-ecru.vercel.app",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 class ChatRequest(BaseModel):
     message: str

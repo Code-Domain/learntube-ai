@@ -381,7 +381,7 @@ export default function Home() {
                           : "bg-white/[0.05] border border-white/10 text-gray-200 px-4 py-2.5 rounded-2xl rounded-bl-sm"
                       }`}
                     >
-                      <div className="prose prose-invert prose-sm max-w-none prose-p:my-0 prose-headings:my-1 prose-p:leading-relaxed">
+                      <div className="prose prose-invert prose-sm max-w-none prose-p:my-0 prose-headings:my-1 prose-p:leading-relaxed max-w-[80%]">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {msg.text}
                         </ReactMarkdown>
